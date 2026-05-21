@@ -1,19 +1,30 @@
-import { Button } from "@/components/ui/button"
+// components
+import HeroSection from "@/components/landing-page/hero-section-one"
+import PainSection from "@/components/landing-page/pain-section"
+import Features from "@/components/landing-page/features"
+import WhoSection from "@/components/landing-page/who-section"
+import HowItWorks from "@/components/landing-page/how-it-works"
+import CTASection from "@/components/landing-page/cta-section"
+import AVSSection from "@/components/landing-page/avs-section"
+import Footer from "@/components/landing-page/footer"
+import FAQs from "@/components/landing-page/faqs-section-one"
+import BackToTop from "@/components/landing-page/back-to-top"
 
-export default function Page() {
+function LandingTwo() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
-        </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
-    </div>
+    <>
+      <HeroSection />
+      <PainSection />
+      <Features />
+      <WhoSection />
+      <HowItWorks />
+      <FAQs />
+      <CTASection />
+      <AVSSection />
+      <BackToTop />
+      <Footer />
+    </>
   )
 }
+
+export default LandingTwo

@@ -12,7 +12,7 @@ export default function HeroSection() {
       <main className="overflow-hidden">
         <section className="flex min-h-screen flex-col justify-center bg-linear-to-b from-background to-muted">
           {/* Adjusted vertical padding for mobile vs desktop */}
-          <div className="relative py-24 md:py-32">
+          <div className="relative py-16 md:py-24">
             {/* Added px-4 sm:px-6 lg:px-8 to contain content on mobile */}
             <div className="relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
               <div className="md:w-1/2">

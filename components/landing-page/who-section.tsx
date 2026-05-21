@@ -32,10 +32,10 @@ const dashboardPreview = [
 
 export default function WhoSection() {
   return (
-    <section id="who" className="relative overflow-hidden bg-background py-24">
+    <section id="who" className="relative overflow-hidden bg-background py-16">
       {/* Radial glow */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute top-0 left-1/2 h-[600px] w-[800px] -translate-x-1/2 -translate-y-1/3 rounded-full bg-primary/10 opacity-30 blur-3xl" />
+        <div className="absolute top-0 left-1/2 h-150 w-200 -translate-x-1/2 -translate-y-1/3 rounded-full bg-primary/10 opacity-30 blur-3xl" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-6">
@@ -71,7 +71,7 @@ export default function WhoSection() {
                 }`}
               >
                 <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#1a7a4a]/10 text-[#1a7a4a]">
-                  <Check className="h-4 w-4 stroke-[3]" />
+                  <Check className="h-4 w-4 stroke-3" />
                 </div>
                 <div>
                   <h4 className="mb-1 text-[0.95rem] font-bold text-foreground">

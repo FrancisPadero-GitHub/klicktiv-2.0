@@ -60,7 +60,7 @@ export default function AVSSection() {
   return (
     <section
       id="about-us"
-      className="bg-background py-10"
+      className="bg-background py-6"
       aria-labelledby="avs-heading"
     >
       <div className="mx-auto max-w-7xl px-6">
@@ -74,7 +74,7 @@ export default function AVSSection() {
 
         {/* Card */}
         <div className="animate-fade-up mx-auto max-w-2xl overflow-hidden rounded-2xl border border-border bg-card shadow-sm transition-shadow hover:shadow-md">
-          <div className="flex flex-col items-center gap-8 px-10 py-12 sm:flex-row sm:items-start">
+          <div className="flex flex-col items-center gap-8 px-10 py-8 sm:flex-row sm:items-start">
             {/* Logo */}
             <div className="shrink-0">
               <div className="relative overflow-hidden rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.12)]">
@@ -104,7 +104,9 @@ export default function AVSSection() {
               <p className="max-w-sm text-[0.9rem] leading-[1.7] text-muted-foreground">
                 Your trusted partner for premium virtual staffing solutions. We
                 connect businesses with exceptional talent from our{" "}
-                <span className="font-semibold text-primary">top 1% pool.</span>
+                <span className="font-semibold text-primary">
+                  top virtual assistants
+                </span>
               </p>
 
               {/* Social icons */}

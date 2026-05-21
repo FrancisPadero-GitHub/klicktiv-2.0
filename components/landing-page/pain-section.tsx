@@ -4,7 +4,7 @@ import Image from "next/image"
 export default function PainSection() {
   return (
     <section id="pain-section">
-      <div className="bg-muted/50 py-24">
+      <div className="bg-muted/50 py-16">
         <div className="mx-auto max-w-5xl px-6">
           <div>
             <p className="mb-4 text-xs font-bold tracking-widest text-primary uppercase">

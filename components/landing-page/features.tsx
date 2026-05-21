@@ -5,7 +5,7 @@ import {
   FileText,
   Users,
   Wrench,
-} from "lucide-react";
+} from "lucide-react"
 
 const features = [
   {
@@ -44,26 +44,26 @@ const features = [
     description:
       "Need a new report? A different workflow? An extra field? Just ask. We build and ship new features as your business grows - no waiting on a product roadmap.",
   },
-];
+]
 
 export default function Features() {
   return (
-    <section id="features" className="relative overflow-hidden bg-background py-24">
+    <section
+      id="features"
+      className="relative overflow-hidden bg-background py-16"
+    >
       {/* Radial glow */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-      >
-        <div className="absolute right-0 top-1/4 h-[600px] w-[600px] -translate-y-1/2 translate-x-1/3 rounded-full bg-primary/10 opacity-40 blur-3xl" />
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="absolute top-1/4 right-0 h-[600px] w-[600px] translate-x-1/3 -translate-y-1/2 rounded-full bg-primary/10 opacity-40 blur-3xl" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-6">
         {/* Header */}
         <div className="animate-fade-up mb-16 max-w-170">
-          <p className="mb-4 text-xs font-bold uppercase tracking-widest text-primary">
+          <p className="mb-4 text-xs font-bold tracking-widest text-primary uppercase">
             What we build for you
           </p>
-          <h2 className="text-[clamp(2rem,4vw,3rem)] font-extrabold leading-[1.15] tracking-[-0.03em] text-foreground">
+          <h2 className="text-[clamp(2rem,4vw,3rem)] leading-[1.15] font-extrabold tracking-[-0.03em] text-foreground">
             Every tool your finances actually need.
           </h2>
           <p className="mt-4 max-w-130 text-[1.05rem] leading-[1.7] text-muted-foreground">
@@ -99,5 +99,5 @@ export default function Features() {
         </div>
       </div>
     </section>
-  );
+  )
 }
