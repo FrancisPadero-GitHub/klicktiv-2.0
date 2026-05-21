@@ -6,6 +6,10 @@ import { Button } from "@/components/ui/button"
 import React from "react"
 import { cn } from "@/lib/utils"
 
+// public
+import KlicktivLogo from "@/public/kt_logo_name.png"
+import KlicktivLogoDark from "@/public/kt_logo_name_dark.png"
+
 const menuItems = [
   { name: "Features", href: "/#features" },
   { name: "How It Works", href: "/#how" },
@@ -33,7 +37,7 @@ export const HeroHeader = () => {
         className={cn(
           "fixed z-20 w-full transition-all duration-300",
           isScrolled &&
-            "border-b border-black/5 bg-background/75 backdrop-blur-lg"
+            "border-b border-border/60 bg-background/75 backdrop-blur-lg"
         )}
       >
         <div className="mx-auto max-w-5xl rounded-b-md px-6">
@@ -42,17 +46,25 @@ export const HeroHeader = () => {
               <Link
                 href="/"
                 aria-label="home"
-                className="flex items-center space-x-2"
+                className="flex h-auto w-25 items-center space-x-2"
               >
                 <Image
-                  src="/kt_logo_name.png"
+                  src={KlicktivLogo}
                   title="Go to landing page"
-                  alt="Klicktiv Logo"
-                  width={90} // The original width of the file (keeps aspect ratio)
-                  height={40} // The original height of the file (keeps aspect ratio)
-                  // Add w-[your-size] and h-auto here!
-                  className="h-auto w-20 dark:brightness-0 dark:invert teal-dark:brightness-0 teal-dark:invert"
+                  alt="Klicktiv"
+                  width={1672}
+                  height={941}
                   priority
+                  className="block dark:hidden"
+                />
+                <Image
+                  src={KlicktivLogoDark}
+                  title="Go to landing page"
+                  alt="Klicktiv"
+                  width={1672}
+                  height={941}
+                  priority
+                  className="hidden dark:block"
                 />
               </Link>
 
@@ -80,7 +92,7 @@ export const HeroHeader = () => {
               </div>
             </div>
 
-            <div className="mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border bg-background p-6 shadow-2xl shadow-zinc-300/20 in-data-[state=active]:block md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none lg:in-data-[state=active]:flex dark:shadow-none dark:lg:bg-transparent">
+            <div className="mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border border-border bg-background p-6 shadow-2xl shadow-foreground/10 in-data-[state=active]:block md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-6 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none lg:in-data-[state=active]:flex dark:shadow-none dark:lg:bg-transparent">
               <div className="lg:hidden">
                 <ul className="space-y-6 text-base">
                   {menuItems.map((item, index) => (
@@ -102,7 +114,7 @@ export const HeroHeader = () => {
                   size="sm"
                   className={cn(isScrolled && "lg:hidden")}
                 >
-                  <Link href="/auth/login">
+                  <Link href="/login">
                     <span>Login</span>
                   </Link>
                 </Button>

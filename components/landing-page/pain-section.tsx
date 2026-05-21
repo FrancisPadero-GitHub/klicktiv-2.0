@@ -56,6 +56,7 @@ export default function PainSection() {
                     alt="spreadsheet"
                     width={1200}
                     height={800}
+                    loading="lazy"
                     className="h-full w-full object-cover object-top"
                   />
                 </div>

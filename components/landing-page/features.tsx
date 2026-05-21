@@ -54,7 +54,7 @@ export default function Features() {
     >
       {/* Radial glow */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute top-1/4 right-0 h-[600px] w-[600px] translate-x-1/3 -translate-y-1/2 rounded-full bg-primary/10 opacity-40 blur-3xl" />
+        <div className="absolute top-1/4 right-0 h-150 w-150 translate-x-1/3 -translate-y-1/2 rounded-full bg-primary/10 opacity-40 blur-3xl" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-6">
@@ -77,7 +77,7 @@ export default function Features() {
           {features.map(({ icon: Icon, title, description }, index) => (
             <div
               key={title}
-              className={`animate-fade-up relative overflow-hidden rounded-xl border border-border bg-card p-9 transition-all before:absolute before:inset-x-0 before:top-0 before:h-0.75 before:bg-[linear-gradient(90deg,var(--primary),transparent)] before:opacity-0 before:transition-opacity hover:-translate-y-1 hover:shadow-[0_16px_40px_rgba(0,0,0,0.08)] hover:before:opacity-100 ${
+              className={`animate-fade-up relative overflow-hidden rounded-xl border border-border bg-card p-9 transition-all before:absolute before:inset-x-0 before:top-0 before:h-0.75 before:bg-[linear-gradient(90deg,var(--primary),transparent)] before:opacity-0 before:transition-opacity hover:-translate-y-1 hover:shadow-xl hover:shadow-foreground/10 hover:before:opacity-100 ${
                 index === 0 || index === 3
                   ? "animate-fade-up-delay-1"
                   : index === 1 || index === 4

@@ -77,13 +77,14 @@ export default function AVSSection() {
           <div className="flex flex-col items-center gap-8 px-10 py-8 sm:flex-row sm:items-start">
             {/* Logo */}
             <div className="shrink-0">
-              <div className="relative overflow-hidden rounded-2xl shadow-[0_4px_20px_rgba(0,0,0,0.12)]">
+              <div className="relative h-auto w-20 overflow-hidden rounded-2xl shadow-lg shadow-foreground/10">
                 <Image
                   src="/avs-logo-blue.png"
                   alt="Advanced Virtual Staff logo"
-                  width={90}
-                  height={40}
-                  className="h-auto w-20 object-cover"
+                  width={1600}
+                  height={1600}
+                  loading="lazy"
+                  className="object-cover"
                 />
               </div>
             </div>

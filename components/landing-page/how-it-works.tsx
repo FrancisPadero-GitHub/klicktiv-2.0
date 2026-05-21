@@ -30,13 +30,13 @@ export default function HowItWorks() {
     <section id="how" className="relative overflow-hidden bg-background py-16">
       {/* Radial glow */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute top-1/2 left-0 h-[500px] w-[500px] -translate-x-1/3 -translate-y-1/2 rounded-full bg-primary/10 opacity-20 blur-3xl" />
+        <div className="absolute top-1/2 left-0 h-125 w-125 -translate-x-1/3 -translate-y-1/2 rounded-full bg-primary/10 opacity-20 blur-3xl" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-7xl px-6">
         {/* Header */}
         <div className="animate-fade-up mb-16">
-          <p className="mb-4 text-xs font-bold tracking-[0.1em] text-foreground uppercase">
+          <p className="mb-4 text-xs font-bold tracking-widest text-foreground uppercase">
             How It Works
           </p>
           <h2 className="text-[clamp(2rem,4vw,3rem)] leading-[1.15] font-extrabold tracking-[-0.03em] text-foreground">
@@ -44,7 +44,7 @@ export default function HowItWorks() {
             <br />
             not months.
           </h2>
-          <p className="mt-4 max-w-[520px] text-[1.05rem] leading-[1.7] text-foreground/50">
+          <p className="mt-4 max-w-130 text-[1.05rem] leading-[1.7] text-muted-foreground">
             We handle all the technical work. You just describe your problems -
             we solve them.
           </p>
@@ -56,7 +56,7 @@ export default function HowItWorks() {
             <div
               key={number}
               className={`animate-fade-up p-10 ${
-                index > 0 ? "border-l border-background/[0.07]" : ""
+                index > 0 ? "border-l border-border/50" : ""
               } ${
                 index === 0
                   ? "animate-fade-up-delay-1"
@@ -67,13 +67,13 @@ export default function HowItWorks() {
                       : "animate-fade-up-delay-4"
               }`}
             >
-              <span className="mb-5 block text-[3.5rem] leading-none font-extrabold text-foreground/[0.5]">
+              <span className="mb-5 block text-[3.5rem] leading-none font-extrabold text-muted-foreground/70">
                 {number}
               </span>
               <h3 className="mb-2.5 text-[1.1rem] font-bold text-foreground">
                 {title}
               </h3>
-              <p className="text-[0.9rem] leading-[1.65] text-foreground/45">
+              <p className="text-[0.9rem] leading-[1.65] text-muted-foreground">
                 {description}
               </p>
             </div>

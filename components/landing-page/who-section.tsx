@@ -70,7 +70,7 @@ export default function WhoSection() {
                         : "animate-fade-up-delay-4"
                 }`}
               >
-                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#1a7a4a]/10 text-[#1a7a4a]">
+                <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-success/15 text-success">
                   <Check className="h-4 w-4 stroke-3" />
                 </div>
                 <div>
@@ -109,7 +109,7 @@ export default function WhoSection() {
                   className={`rounded-full px-2.5 py-1 text-[0.65rem] font-bold tracking-wider uppercase ${
                     warn
                       ? "bg-destructive/10 text-destructive" // Soft red for warnings
-                      : "bg-emerald-500/10 text-emerald-600" // Soft green for growth
+                      : "bg-success/15 text-success" // Soft green for growth
                   }`}
                 >
                   {badge}

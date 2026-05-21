@@ -87,9 +87,9 @@ export default function HeroSection() {
                   <Image
                     src="/klicktiv-dashboard-overview.png"
                     alt="app screen"
-                    width="2880"
-                    height="1842"
-                    loading="eager"
+                    width={1904}
+                    height={953}
+                    priority
                     className="size-full object-cover object-top-left"
                   />
                 </div>
