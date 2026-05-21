@@ -1,0 +1,67 @@
+Ducts All Done Jobs
+
+  DAD TECH (75%)
+  Gross : $139
+  Net  : $104.25
+
+  SUB TECHS (50%)
+  Gross : $874.50
+  Net  : $0
+
+  AVIRAN (60%)
+  Gross : $0
+  Net : $0
+
+  TAMIR (75%)
+  Gross : $139
+  Net : $104.25
+
+3 Bros Jobs
+
+  DAD TECH (75%)
+  Gross : $257
+  Net : $192.75
+
+  SUB TECHS (50%)
+  Gross : $3,564.40
+  Net  : $1,782.40
+
+  AVIRAN (60%)
+  Gross : $0
+  Net : $0
+
+  TAMIR (75%)
+  Gross : $257
+  Net : $192.75
+
+
+So the idea is to create a new custom weekly export that will include the following columns:
+
+each have 2 distinct main categories
+
+1. Ducts all done
+  
+2. 3 Bros jobs
+
+
+Scalable feature that would be based on the company
+
+Check  in team claude skill -> klicktiv daily report
+Martin wants the same format for daily, weekly and monthly
+Should be separate from the current one, do not change the current report format, just add this as filter
+
+
+remove - 
+ - shalow
+ - yotam
+
+cron job notification reminders on the estimates or pending jobs like flag it or something and then connect this to the 
+html sample webiste miss em created
+
+history move or who marked as done like full history of the job who operated on a specific job
+like kung kinsay nag promote sa job or estimate like full closure history of the job
+
+Approach
+ Development
+  - Create a folder for a specific company for export
+  - Create export templates for each company
