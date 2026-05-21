@@ -1,9 +1,8 @@
 "use client"
 import Link from "next/link"
 import Image from "next/image"
-import { useRouter } from "next/navigation"
 import { useForm } from "react-hook-form"
-import { Eye, EyeOff, Loader2, ArrowRight, LayoutDashboard } from "lucide-react"
+import { Eye, EyeOff, Loader2 } from "lucide-react"
 import { useState } from "react"
 import { cn } from "@/lib/utils"
 import {
@@ -25,9 +24,6 @@ import KlicktivLogoLightMode from "@/public/kt_logo_name.png"
 import KlicktivLogoDarkMode from "@/public/kt_logo_name_dark.png"
 
 export default function LoginPage() {
-  const router = useRouter()
-  // used to disable the submit button and show "Dashboard" if the user is already authenticated (e.g. from a previous session)
-
   const { mutate: loginMutation, error: loginError, isPending } = useLogin()
   const {
     register,
@@ -39,6 +35,11 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false)
   function onSubmit(values: LoginFormValues) {
     loginMutation(values)
+
+    // You might be wondering why I dont' have a router here, its because it is handled by the proxy.ts and auth context
+    // What happens is that when the user logs in, the auth context will detect the change in authenticaiton state
+    // and then it will refresh the router, and then the proxy.ts will be reran and the cookies will be checked and then from there
+    // it will handled the redirecting
   }
 
   const serverError = loginError

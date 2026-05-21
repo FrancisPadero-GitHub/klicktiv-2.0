@@ -1,11 +1,12 @@
-import { Geist, Geist_Mono, Nunito_Sans } from "next/font/google"
+import { Geist_Mono, Nunito_Sans } from "next/font/google"
 
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 
-// Library
+// Wrappers
 import { QueryProvider } from "@/components/query-provider"
+import { AuthProvider } from "@/components/auth-context-provider"
 
 const nunitoSans = Nunito_Sans({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -32,7 +33,9 @@ export default function RootLayout({
     >
       <body>
         <QueryProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <AuthProvider>
+            <ThemeProvider>{children}</ThemeProvider>
+          </AuthProvider>
         </QueryProvider>
       </body>
     </html>

@@ -22,5 +22,7 @@ const login = async ({ email, password }: LoginFormValues) => {
 export function useLogin() {
   return useMutation({
     mutationFn: (values: LoginFormValues) => login(values),
+    // don't need to invalidate queries here cause auth context handles the session subscription
+    // on auth state changes, but we can add side effects here if needed in the future.
   })
 }
