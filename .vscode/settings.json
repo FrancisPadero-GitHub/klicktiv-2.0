@@ -1,0 +1,20 @@
+{
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.detectIndentation": true,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 3000,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.autoIndentOnPaste": true,
+  "editor.cursorBlinking": "smooth",
+  // ignores unknown at rules in global.css
+  "css.lint.unknownAtRules": "ignore",
+  "editor.formatOnSave": true,
+  "workbench.colorTheme": "Monokai"
+}
