@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 // Wrappers
 import { QueryProvider } from "@/components/query-provider"
 import { AuthProvider } from "@/components/auth-context-provider"
+import { TimezoneProvider } from "@/hooks/useTimezone"
 
 const nunitoSans = Nunito_Sans({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -34,7 +35,9 @@ export default function RootLayout({
       <body>
         <QueryProvider>
           <AuthProvider>
-            <ThemeProvider>{children}</ThemeProvider>
+            <ThemeProvider>
+              <TimezoneProvider>{children}</TimezoneProvider>
+            </ThemeProvider>
           </AuthProvider>
         </QueryProvider>
       </body>

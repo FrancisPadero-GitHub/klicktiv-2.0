@@ -1,5 +1,5 @@
-// SSR cookies behave differently than regular cookies, 
-// so we need to use the createBrowserClient function from @supabase/ssr to create a Supabase client that can handle SSR cookies properly. 
+// SSR cookies behave differently than regular cookies,
+// so we need to use the createBrowserClient function from @supabase/ssr to create a Supabase client that can handle SSR cookies properly.
 // This allows us to maintain user sessions across server and client rendering in a Next.js application.
 import { createBrowserClient } from "@supabase/ssr"
 
