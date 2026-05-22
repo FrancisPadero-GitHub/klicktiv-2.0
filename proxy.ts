@@ -50,12 +50,8 @@ export async function proxy(request: NextRequest) {
 
   // 2. Define route logic for protected and public pages
   const currentPath = request.nextUrl.pathname
-  const isSuperAdmin = request.nextUrl.pathname.startsWith(
-    "/super-admin"
-  )
-  const isNormalUser = request.nextUrl.pathname.startsWith(
-    "/dashboard"
-  )
+  const isSuperAdmin = request.nextUrl.pathname.startsWith("/super-admin")
+  const isNormalUser = request.nextUrl.pathname.startsWith("/dashboard")
   const isAuthPage =
     request.nextUrl.pathname.startsWith("/login") ||
     request.nextUrl.pathname.startsWith("/forgot-password")
@@ -72,52 +68,43 @@ export async function proxy(request: NextRequest) {
     return NextResponse.redirect(loginUrl)
   }
 
-  /** NOTE:
-   * The above logic ensures that:
-   */
-
   // Authenticated user routing logic
   if (user) {
-    // A. Route away from Auth pages based on role
+    // A. Route away from Auth pages based on role or intended destination
     if (isAuthPage) {
+      const nextParam = request.nextUrl.searchParams.get("next")
+
+      if (nextParam) {
+        try {
+          const redirectUrl = new URL(nextParam, request.url)
+
+          // Security check: Only redirect if the target URL shares the same host origin
+          if (redirectUrl.origin === request.nextUrl.origin) {
+            return NextResponse.redirect(redirectUrl)
+          }
+        } catch {
+          // Fallback to standard role routing if the URL parsing fails
+        }
+      }
+
       if (userRole === "super_admin") {
-        return NextResponse.redirect(
-          new URL("/super-admin", request.url)
-        )
-      // other roles (company, va/user) should be sent to the normal dashboard
+        return NextResponse.redirect(new URL("/super-admin", request.url))
       } else {
-        return NextResponse.redirect(
-          new URL("/dashboard", request.url)
-        )
+        return NextResponse.redirect(new URL("/dashboard", request.url))
       }
     }
 
     // B. Protect role-specific routes (Prevent 'user' from accessing '/super-admin')
-    if (
-      currentPath.startsWith("/super-admin") &&
-      userRole !== "super_admin"
-    ) {
+    if (currentPath.startsWith("/super-admin") && userRole !== "super_admin") {
       // Kick them back to their appropriate dashboard
-      return NextResponse.redirect(
-        new URL("/dashboard", request.url)
-      )
+      return NextResponse.redirect(new URL("/dashboard", request.url))
     }
   }
 
   // Return the (possibly updated) response
   return supabaseResponse
 }
-/**
- * Run the Supabase auth check on absolutely every single page of my website... EXCEPT for these specific files.
- * Imagine a user goes to your /dashboard. To load that one page, the browser actually makes dozens of background requests:
- * 1 request for the HTML page.
- * 5 requests for different JavaScript chunks (_next/static/…).
- * 1 request for your logo (logo.png).
- * 1 request for the tab icon (favicon.ico).
- * Without the matcher, your middleware would ping Supabase to check the user's session 8 separate times
- * just to load one page. That will drastically slow down your website and burn through
- * your Supabase database quota for absolutely no reason.
- */
+
 export const config = {
   matcher: [
     "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
