@@ -13,10 +13,8 @@ import {
 import { supabase } from "@/lib/supabase"
 
 // hooks
-import {
-  useFetchSession,
-  auth_session_query_key,
-} from "@/hooks/authentication/useFetchSession"
+import { useFetchSession } from "@/hooks/authentication/useFetchSession"
+import { AUTH_QUERY_KEY } from "@/lib/auth"
 
 // Types
 import type { User, Session } from "@supabase/supabase-js"
@@ -31,6 +29,7 @@ export type AuthContextValue = {
   role: string | null
   session: Session | null
   isAuthenticated: boolean
+  company_id: string | null
   isFetching: boolean
   isError: boolean
 }
@@ -49,7 +48,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       data: { subscription },
     } = supabase.auth.onAuthStateChange((event, session) => {
       // Invalidate React Query cache to trigger a client-side refetch
-      void queryClient.setQueryData(auth_session_query_key, session)
+      void queryClient.setQueryData(AUTH_QUERY_KEY, session)
 
       // Commented to test if this is really needed.
       // void queryClient.invalidateQueries({
@@ -77,6 +76,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       session: session ?? null,
       isAuthenticated: !!session,
       role: session?.user.app_metadata.role ?? null,
+
+      company_id: session?.user.app_metadata.company_id ?? null,
 
       // rare use cases, but feel free to use it as you see fit
       isFetching: isFetching,

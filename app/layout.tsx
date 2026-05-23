@@ -7,7 +7,10 @@ import { cn } from "@/lib/utils"
 // Wrappers
 import { QueryProvider } from "@/components/query-provider"
 import { AuthProvider } from "@/components/auth-context-provider"
-import { TimezoneProvider } from "@/hooks/useTimezone"
+import { TimezoneProvider } from "@/components/timezone-provider"
+
+// Components
+import { Toaster } from "@/components/ui/sonner"
 
 const nunitoSans = Nunito_Sans({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -36,6 +39,7 @@ export default function RootLayout({
         <QueryProvider>
           <AuthProvider>
             <ThemeProvider>
+              <Toaster position="top-right" />
               <TimezoneProvider>{children}</TimezoneProvider>
             </ThemeProvider>
           </AuthProvider>

@@ -94,9 +94,26 @@ export async function proxy(request: NextRequest) {
       }
     }
 
+    /**
+     * TODO:
+     * - Implement a granular access control system here
+     * - Refactor the code here using AI
+     * - Add a fallback 404 page for unauthorized access attempts instead of redirecting to the dashboard (security reasons
+     * )
+     */
+
     // B. Protect role-specific routes (Prevent 'user' from accessing '/super-admin')
     if (currentPath.startsWith("/super-admin") && userRole !== "super_admin") {
       // Kick them back to their appropriate dashboard
+      return NextResponse.redirect(new URL("/dashboard", request.url))
+    }
+
+    // if users tries to access tech pages they are not allowed to they get to redirected
+    if (
+      currentPath.startsWith("/dashboard/technicians") &&
+      userRole !== "company"
+    ) {
+      // otherwise they get kicked to a not found page, because that way they won't know that technicians page exists
       return NextResponse.redirect(new URL("/dashboard", request.url))
     }
   }

@@ -1,9 +1,7 @@
 import { useQuery } from "@tanstack/react-query"
 import { supabase } from "@/lib/supabase"
 import type { Session } from "@supabase/supabase-js"
-
-// used as a query key, this is useful as for dynamic query keys purposes.
-export const auth_session_query_key = ["auth", "user"] as const
+import { AUTH_QUERY_KEY } from "@/lib/auth"
 
 const fetchUserSession = async (): Promise<Session | null> => {
   const {
@@ -16,7 +14,7 @@ const fetchUserSession = async (): Promise<Session | null> => {
 
 export function useFetchSession() {
   return useQuery({
-    queryKey: auth_session_query_key,
+    queryKey: AUTH_QUERY_KEY,
     queryFn: fetchUserSession,
     staleTime: Infinity, // don't need to refetch since auth context handles the session subscription on auth
     retry: 2, // retry to login incase of internet failure or hiccups
