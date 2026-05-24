@@ -14,6 +14,12 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { Kbd } from "@/components/ui/kbd"
 
 // import FeedbackPage from "../submit-feedback/feedback-page";
 import {
@@ -107,6 +113,7 @@ export default function SidebarContent({
         )}
       >
         <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
+          {/* Icon only (for collapsed sidebar) */}
           <div
             className={cn(
               "absolute flex items-center justify-center transition-all duration-200 ease-in-out",
@@ -115,56 +122,68 @@ export default function SidebarContent({
                 : "pointer-events-none h-8 w-8 scale-90 opacity-0"
             )}
           >
-            <Image
-              src={KlicktivIconLightMode}
-              title="Klicktiv"
-              alt="Klicktiv Logo"
-              width={2048}
-              height={2048}
-              className="dark:hidden"
-              priority
-              quality={100}
-            />
-            <Image
-              src={KlicktivIconDarkMode}
-              title="Klicktiv"
-              alt="Klicktiv Logo"
-              width={2048}
-              height={2048}
-              className="hidden dark:block"
-              priority
-              quality={100}
-            />
+            <Tooltip>
+              <TooltipTrigger>
+                <Image
+                  src={KlicktivIconLightMode}
+                  alt="Klicktiv Logo"
+                  width={2048}
+                  height={2048}
+                  className="dark:hidden"
+                  priority
+                  quality={100}
+                />
+                <Image
+                  src={KlicktivIconDarkMode}
+                  alt="Klicktiv Logo"
+                  width={2048}
+                  height={2048}
+                  className="hidden dark:block"
+                  priority
+                  quality={100}
+                />
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                Press <Kbd>D</Kbd> to toggle between light & dark mode
+              </TooltipContent>
+            </Tooltip>
           </div>
-
+          {/* Full logo (icon + text) */}
           <div
             className={cn(
-              "absolute flex items-center justify-center transition-all duration-200 ease-in-out",
+              // for some reason if you remove this pt-2 the logo will corner so much up top and do not center, and no items and justify center
+              // wont do either
+              "absolute flex pt-2 transition-all duration-200 ease-in-out",
               !collapsed
-                ? "h-auto w-25 scale-100 opacity-100"
-                : "pointer-events-none h-8 w-36 scale-90 opacity-0"
+                ? "h-auto w-25 scale-90 opacity-100"
+                : "pointer-events-none h-auto w-25 scale-90 opacity-0"
             )}
           >
-            <Image
-              src={KlicktivLogoLightMode}
-              title="Klicktiv Dashboard"
-              alt="Klicktiv Logo"
-              width={1672}
-              height={941}
-              className="dark:hidden"
-              priority
-              quality={100}
-            />
-            <Image
-              src={KlicktivLogoDarkMode}
-              title="Klicktiv Dashboard"
-              alt="Klicktiv Logo"
-              width={1672}
-              height={941}
-              className="hidden dark:block"
-              priority
-              quality={100}
-            />
+            <Tooltip>
+              <TooltipTrigger>
+                <Image
+                  src={KlicktivLogoLightMode}
+                  alt="Klicktiv Logo"
+                  width={1672}
+                  height={941}
+                  className="dark:hidden"
+                  priority
+                  quality={100}
+                />
+                <Image
+                  src={KlicktivLogoDarkMode}
+                  alt="Klicktiv Logo"
+                  width={1672}
+                  height={941}
+                  className="hidden dark:block"
+                  priority
+                  quality={100}
+                />
+              </TooltipTrigger>
+              <TooltipContent side="bottom">
+                Press <Kbd>D</Kbd> to toggle between light & dark mode
+              </TooltipContent>
+            </Tooltip>
           </div>
         </div>
       </div>
