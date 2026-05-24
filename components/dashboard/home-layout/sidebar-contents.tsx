@@ -1,6 +1,19 @@
+"use client"
 import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
+import { useState } from "react"
+import { usePathname } from "next/navigation"
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog"
 
 // import FeedbackPage from "../submit-feedback/feedback-page";
 import {
@@ -21,6 +34,13 @@ import { useSidebarStore } from "@/features/store/dashboard/useSidebarStore"
 import { useLogout } from "@/hooks/authentication/useLogout"
 import { useEffect } from "react"
 
+// public
+import KlicktivLogoLightMode from "@/public/kt_logo_name.png"
+import KlicktivLogoDarkMode from "@/public/kt_logo_name_dark.png"
+import KlicktivIconLightMode from "@/public/icon.png"
+import KlicktivIconDarkMode from "@/public/icon_dark.png"
+
+// These are the sidebar navigation items.
 export const navItems = [
   { href: "/dashboard", label: "Overview / Reports", icon: LayoutDashboard },
   { href: "/dashboard/jobs", label: "Jobs", icon: Briefcase },
@@ -30,7 +50,7 @@ export const navItems = [
     href: "/dashboard/technicians",
     label: "Technicians",
     icon: Users,
-    adminOnly: true,
+    adminOnly: true, // The `adminOnly` property indicates if the item should only be visible to admin users.
   },
   {
     href: "/dashboard/settings",
@@ -40,25 +60,30 @@ export const navItems = [
 ]
 
 interface SidebarContentProps {
-  companyName: string
-  pathname: string
-  visibleNavItems: typeof navItems
   user: { email?: string | null } | null
+  userRole: string | null
   company: string
   /** When true, the sidebar is in desktop icon-only (rail) mode */
   collapsed?: boolean
 }
 
 export default function SidebarContent({
-  // companyName,
-  pathname,
-  visibleNavItems,
   user,
+  userRole,
   company,
   collapsed = false,
 }: SidebarContentProps) {
   const { sidebarState, setSidebarState } = useSidebarStore()
+  const pathname = usePathname()
   const { mutate: logout, isPending, isError, error } = useLogout()
+  const [isAlertOpen, setIsAlertOpen] = useState(false)
+
+  // Admins can see all nav items; non-admins have some items hidden
+  // and are redirected if they try to access those routes handled by proxy.ts middleware.
+  const isAdmin = userRole === "company" || userRole === "super_admin"
+
+  // derive visible nav items directly — cheap filter, no state needed
+  const visibleNavItems = navItems.filter((item) => !item.adminOnly || isAdmin)
 
   const logoutHandler = () => {
     logout()
@@ -81,45 +106,66 @@ export default function SidebarContent({
           "justify-center px-2"
         )}
       >
-        <div className="relative flex h-full w-full items-center justify-center">
-          {/* <span
+        <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
+          <div
             className={cn(
-              "absolute top-4 left-28 z-99 text-[9px] font-bold uppercase tracking-widest text-accent-foreground truncate",
-              collapsed ? "hidden" : "",
+              "absolute flex items-center justify-center transition-all duration-200 ease-in-out",
+              collapsed
+                ? "h-15 w-15 scale-100 opacity-100"
+                : "pointer-events-none h-8 w-8 scale-90 opacity-0"
             )}
           >
-            {companyName || "No Company"}
-          </span> */}
-          <Image
-            src="/kt_logo_only.png"
-            title="Klicktiv"
-            alt="Klicktiv Logo"
-            width={60}
-            height={60}
+            <Image
+              src={KlicktivIconLightMode}
+              title="Klicktiv"
+              alt="Klicktiv Logo"
+              width={2048}
+              height={2048}
+              className="dark:hidden"
+              priority
+              quality={100}
+            />
+            <Image
+              src={KlicktivIconDarkMode}
+              title="Klicktiv"
+              alt="Klicktiv Logo"
+              width={2048}
+              height={2048}
+              className="hidden dark:block"
+              priority
+              quality={100}
+            />
+          </div>
+
+          <div
             className={cn(
-              "teal-dark:invert teal-dark:mix-blend-screen absolute object-contain transition-all duration-300 dark:mix-blend-screen dark:invert",
-              collapsed
-                ? "scale-150 opacity-100"
-                : "pointer-events-none scale-75 opacity-0"
-            )}
-            style={{ width: "auto", height: "auto" }}
-            priority
-          />
-          <Image
-            src="/kt_logo_name.png"
-            title="Klicktiv Dashboard"
-            alt="Klicktiv Logo"
-            width={90}
-            height={40}
-            className={cn(
-              "teal-dark:invert teal-dark:mix-blend-screen w-auto transition-all duration-100 dark:mix-blend-screen dark:invert",
+              "absolute flex items-center justify-center transition-all duration-200 ease-in-out",
               !collapsed
-                ? "scale-90 opacity-100"
-                : "pointer-events-none scale-75 opacity-0"
+                ? "h-auto w-25 scale-100 opacity-100"
+                : "pointer-events-none h-8 w-36 scale-90 opacity-0"
             )}
-            style={{ width: "auto", height: "auto" }}
-            priority
-          />
+          >
+            <Image
+              src={KlicktivLogoLightMode}
+              title="Klicktiv Dashboard"
+              alt="Klicktiv Logo"
+              width={1672}
+              height={941}
+              className="dark:hidden"
+              priority
+              quality={100}
+            />
+            <Image
+              src={KlicktivLogoDarkMode}
+              title="Klicktiv Dashboard"
+              alt="Klicktiv Logo"
+              width={1672}
+              height={941}
+              className="hidden dark:block"
+              priority
+              quality={100}
+            />
+          </div>
         </div>
       </div>
 
@@ -221,7 +267,7 @@ export default function SidebarContent({
           </div>
         )}
         <button
-          onClick={() => logoutHandler()}
+          onClick={() => setIsAlertOpen(true)}
           disabled={isPending}
           title={collapsed ? "Log out" : undefined}
           className={cn(
@@ -246,6 +292,25 @@ export default function SidebarContent({
             Log out
           </span>
         </button>
+        {/* Logout alert dialog to double confirm to avoid misclicks */}
+        <AlertDialog open={isAlertOpen}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Confirm log out</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to log out?
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel onClick={() => setIsAlertOpen(false)}>
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction onClick={() => logoutHandler()}>
+                Confirm
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
       </div>
     </>
   )

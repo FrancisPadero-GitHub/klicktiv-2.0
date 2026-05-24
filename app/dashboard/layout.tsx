@@ -1,15 +1,12 @@
 "use client"
-import { usePathname } from "next/navigation"
-import {  useMemo } from "react"
-// import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils"
 
 // hooks
 import { useFetchCompany } from "@/hooks/company/useFetchCompany"
 
 // components
+import SidebarContent from "@/components/dashboard/home-layout/sidebar-contents"
 import { useAuth } from "@/components/auth-context-provider"
-import SidebarContent, { navItems } from "@/components/dashboard/home-layout/sidebar-contents"
 import Topbar from "@/components/dashboard/home-layout/topbar"
 import Loading from "@/components/loading"
 
@@ -24,8 +21,6 @@ export default function DashboardLayout({
   // Sidebar state
   const { sidebarState, setSidebarState, desktopCollapsed } = useSidebarStore()
 
-  const pathname = usePathname()
-
   // Auth to determine which nav items to show and whether to allow access to certain routes
   const { user, role, company_id, isFetching: isRoleFetching } = useAuth()
 
@@ -34,14 +29,6 @@ export default function DashboardLayout({
     typeof company_id === "string" && company_id ? company_id : undefined
   const { data: company } = useFetchCompany(comp_id)
   const companyName = company?.name || "No Company"
-
-  // Admins can see all nav items; non-admins have some items hidden and are redirected if they try to access those routes
-  const isAdmin = role === "company" || role === "super_admin"
-
-  const visibleNavItems = useMemo(
-    () => navItems.filter((item) => !item.adminOnly || isAdmin),
-    [isAdmin]
-  )
 
   return (
     <div>
@@ -59,10 +46,8 @@ export default function DashboardLayout({
             )}
           >
             <SidebarContent
-              companyName={companyName}
-              pathname={pathname}
-              visibleNavItems={visibleNavItems}
               user={user}
+              userRole={role}
               company={companyName}
               collapsed={desktopCollapsed}
             />
@@ -84,10 +69,8 @@ export default function DashboardLayout({
             )}
           >
             <SidebarContent
-              companyName={companyName}
-              pathname={pathname}
-              visibleNavItems={visibleNavItems}
               user={user}
+              userRole={role}
               company={companyName}
               collapsed={false}
             />

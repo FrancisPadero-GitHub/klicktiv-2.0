@@ -1,4 +1,5 @@
 // import SidebarNotification from "@/components/dashboard/notifications/sidebar-notification"
+"use client"
 import { useSidebarStore } from "@/features/store/dashboard/useSidebarStore"
 import { PanelLeftClose, PanelLeftOpen } from "lucide-react"
 
