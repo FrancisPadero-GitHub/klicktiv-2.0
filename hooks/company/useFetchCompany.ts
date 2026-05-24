@@ -1,44 +1,50 @@
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/lib/supabase";
-import type { Database } from "@/database.types";
+import { useQuery } from "@tanstack/react-query"
+import { supabase } from "@/lib/supabase"
+import type { Database } from "@/database.types"
 
-export type CompanyRow = Database["public"]["Tables"]["companies"]["Row"];
+// ─── Types ───────────────────────────────────────────────────────────────────
+
+export type CompanyRow = Database["public"]["Tables"]["companies"]["Row"]
 
 export interface CompanyColumns {
-  id: string;
-  name: string | null;
+  id: string
+  name: string | null
 }
 
-export const companyQueryKey = (companyId?: string) =>
-  ["companies", "detail", companyId ?? null] as const;
+// ─── Query Key ────────────────────────────────────────────────────────────────
 
-export async function fetchCompanyById(
-  companyId: string,
-): Promise<CompanyColumns> {
+export const companyQueryKey = (companyId?: string) =>
+  ["companies", "detail", companyId ?? null] as const
+
+// ─── Query Fn ─────────────────────────────────────────────────────────────────
+
+export async function fetchCompanyById(companyId: string): Promise<CompanyColumns> {
   const { data, error } = await supabase
     .from("companies")
     .select("id, name")
     .eq("id", companyId)
-    .single();
+    .single()
 
   if (error) {
-    throw new Error(error.message || "Failed to fetch company");
+    throw new Error(error.message || "Failed to fetch company")
   }
 
-  return data as CompanyColumns;
+  return data as CompanyColumns
 }
+
+// ─── Hook ─────────────────────────────────────────────────────────────────────
 
 export function useFetchCompany(companyId?: string) {
   return useQuery<CompanyColumns, Error>({
     queryKey: companyQueryKey(companyId),
     queryFn: () => {
       if (!companyId) {
-        throw new Error("Company ID is missing from user session");
+        throw new Error("Company ID is missing from user session")
       }
-      return fetchCompanyById(companyId);
+      return fetchCompanyById(companyId)
     },
     enabled: Boolean(companyId),
     staleTime: 1000 * 60 * 10,
     retry: 1,
-  });
+  })
 }

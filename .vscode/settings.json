@@ -16,25 +16,5 @@
   // ignores unknown at rules in global.css
   "css.lint.unknownAtRules": "ignore",
   "editor.formatOnSave": true,
-  "workbench.colorTheme": "Monokai",
-  "workbench.colorCustomizations": {
-    "activityBar.activeBackground": "#605885",
-    "activityBar.background": "#605885",
-    "activityBar.foreground": "#e7e7e7",
-    "activityBar.inactiveForeground": "#e7e7e799",
-    "activityBarBadge.background": "#3a2a26",
-    "activityBarBadge.foreground": "#e7e7e7",
-    "commandCenter.border": "#e7e7e799",
-    "sash.hoverBorder": "#605885",
-    "statusBar.background": "#4a4466",
-    "statusBar.foreground": "#e7e7e7",
-    "statusBarItem.hoverBackground": "#605885",
-    "statusBarItem.remoteBackground": "#4a4466",
-    "statusBarItem.remoteForeground": "#e7e7e7",
-    "titleBar.activeBackground": "#4a4466",
-    "titleBar.activeForeground": "#e7e7e7",
-    "titleBar.inactiveBackground": "#4a446699",
-    "titleBar.inactiveForeground": "#e7e7e799"
-  },
-  "peacock.color": "#4A4466"
+  "workbench.colorTheme": "Monokai"
 }

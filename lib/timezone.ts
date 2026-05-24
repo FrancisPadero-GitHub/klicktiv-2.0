@@ -1,5 +1,7 @@
 import dayjs from "@/lib/dayjs"
 
+// ─── Constants ────────────────────────────────────────────────────────────────
+
 export const TIMEZONE_STORAGE_KEY = "klicktiv-timezone"
 
 export const TIMEZONE_OPTIONS = [
@@ -25,26 +27,25 @@ export const TIMEZONE_OPTIONS = [
   { value: "Pacific/Auckland", label: "Auckland, New Zealand" },
 ] as const
 
-// type
+// ─── Types ───────────────────────────────────────────────────────────────────
+
 export type SupportedTimezone = (typeof TIMEZONE_OPTIONS)[number]["value"]
 
-const supportedTimezoneValues = new Set(
-  TIMEZONE_OPTIONS.map((option) => option.value)
-)
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+const supportedTimezoneValues = new Set(TIMEZONE_OPTIONS.map((option) => option.value))
 
 export function getBrowserTimezone() {
   return dayjs.tz.guess()
 }
 
 export function isSupportedTimezone(
-  timezone: string | null | undefined
+  timezone: string | null | undefined,
 ): timezone is SupportedTimezone {
-  return (
-    !!timezone && supportedTimezoneValues.has(timezone as SupportedTimezone)
-  )
+  return !!timezone && supportedTimezoneValues.has(timezone as SupportedTimezone)
 }
 
-// Resolve timezone from explicit value first, then from local storage.
+/** Resolve timezone from an explicit value first, then from localStorage. */
 export function resolveTimezone(timezone?: string | null) {
   if (isSupportedTimezone(timezone)) return timezone
 
@@ -62,13 +63,11 @@ export function saveTimezone(timezone: string | null) {
     window.localStorage.removeItem(TIMEZONE_STORAGE_KEY)
     return
   }
-
   window.localStorage.setItem(TIMEZONE_STORAGE_KEY, timezone)
 }
 
 export function getTimezoneLabel(timezone: string) {
   return (
-    TIMEZONE_OPTIONS.find((option) => option.value === timezone)?.label ??
-    timezone
+    TIMEZONE_OPTIONS.find((option) => option.value === timezone)?.label ?? timezone
   )
 }
