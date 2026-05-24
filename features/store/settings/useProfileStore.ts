@@ -1,52 +1,42 @@
-import { create } from "zustand";
-import type { ProfilesRow } from "@/hooks/auth/useFetchProfiles";
-import { devtools } from "zustand/middleware";
+import { create } from "zustand"
+import { devtools } from "zustand/middleware"
+import type { ProfilesRow } from "@/hooks/auth/useFetchProfiles"
 
-/**
- * Steps to create a proper store
- *
- * 1. Shape of the store (interface)
- * 2. Mutations of the store (interface)
- * 3. Type of the store: Combine 1 & 2
- * 4. Set default values of the form
- * 5. Set initial value of the store (including the functions) (Profiuule )
- */
+// ─── Types ───────────────────────────────────────────────────────────────────
 
-// Extends the type first cause password and command is not in the types in Profiles row
+// Extends the base type since password and command are not part of ProfilesRow.
 export type ExtendedProfilesRow = ProfilesRow & {
-  password?: string | null;
-  command?: string;
-};
+  password?: string | null
+  command?: string
+}
 
-type mode = "add" | "edit";
+type FormMode = "add" | "edit"
 
 // Shape of the store
 interface ProfileState {
-  form: ExtendedProfilesRow;
-  isViewDialogOpen: boolean;
-  formType: mode;
-  isFormDialogOpen: boolean;
+  form: ExtendedProfilesRow
+  isViewDialogOpen: boolean
+  formType: FormMode
+  isFormDialogOpen: boolean
 }
 
 // Mutations of the store
 interface ProfileActions {
-  setForm: (data: Partial<ExtendedProfilesRow>) => void; // Partial is a requiement also for the edge functions since I also use the dynamic objects there
-  resetForm: () => void;
-
-  // View dialog actions
-  setViewDialogOpen: (open: boolean) => void;
-  // Form dialog actions
-  setFormDialogOpen: (open: boolean) => void;
-  setFormType: (data: mode) => void;
+  // Partial is required for edge functions that accept dynamic objects.
+  setForm: (data: Partial<ExtendedProfilesRow>) => void
+  resetForm: () => void
+  setViewDialogOpen: (open: boolean) => void
+  setFormDialogOpen: (open: boolean) => void
+  setFormType: (data: FormMode) => void
 }
 
-// Combines both for the full store type
-type ProfileStore = ProfileState & ProfileActions;
+type ProfileStore = ProfileState & ProfileActions
 
-// Default Values
+// ─── Defaults ─────────────────────────────────────────────────────────────────
+
 export const defaultFormValues: ExtendedProfilesRow = {
   id: "",
-  company_id: "", // required both id and company for the check on the edge function
+  company_id: "", // required for edge function checks
   avatar_url: null,
   created_at: null,
   email: null,
@@ -59,18 +49,19 @@ export const defaultFormValues: ExtendedProfilesRow = {
   website: null,
   command: "update",
   deleted_at: null,
-};
+}
 
-// Initial State
+// ─── Initial State ────────────────────────────────────────────────────────────
+
 const initialState: ProfileState = {
   form: defaultFormValues,
   isViewDialogOpen: false,
   formType: "add",
   isFormDialogOpen: false,
-};
+}
 
-// 5. Corrected Middleware Setup
-// Note the extra () before the middleware - this is crucial for TS inference
+// ─── Store ────────────────────────────────────────────────────────────────────
+
 export const useProfileStore = create<ProfileStore>()(
   devtools(
     (set) => ({
@@ -83,20 +74,17 @@ export const useProfileStore = create<ProfileStore>()(
           "profile/setForm",
         ),
 
-      resetForm: () =>
-        set({ form: defaultFormValues }, false, "profile/resetForm"),
+      resetForm: () => set({ form: defaultFormValues }, false, "profile/resetForm"),
 
       setViewDialogOpen: (open) =>
         set({ isViewDialogOpen: open }, false, "profile/setViewDialogOpen"),
 
-      // sets the state to add or edit to be able to dynamically adjust the texts on the dialog
-      setFormType: (type) =>
-        set({ formType: type }, false, "profile/setFormType"),
+      // Sets the mode to dynamically adjust dialog texts.
+      setFormType: (type) => set({ formType: type }, false, "profile/setFormType"),
 
-      // doesn't matter what type of these are actually here I think cause both opens up a dialog anyways
       setFormDialogOpen: (open) =>
         set({ isFormDialogOpen: open }, false, "profile/setFormDialogOpen"),
     }),
     { name: "Profile Store" },
   ),
-);
+)

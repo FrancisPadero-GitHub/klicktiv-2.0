@@ -1,36 +1,37 @@
-import { create } from "zustand";
-import type { Database } from "@/database.types";
+import { create } from "zustand"
+import type { Database } from "@/database.types"
 
-type TechnicianInsert = Database["public"]["Tables"]["technicians"]["Insert"];
-type TechnicianRow = Database["public"]["Tables"]["technicians"]["Row"];
+// ─── Types ───────────────────────────────────────────────────────────────────
 
-type FormMode = "add" | "edit";
+type TechnicianInsert = Database["public"]["Tables"]["technicians"]["Insert"]
+type TechnicianRow = Database["public"]["Tables"]["technicians"]["Row"]
+
+type FormMode = "add" | "edit"
 
 interface TechnicianStore {
-  form: TechnicianInsert;
-  mode: FormMode;
-  isDialogOpen: boolean;
-  isSubmitting: boolean;
+  form: TechnicianInsert
+  mode: FormMode
+  isDialogOpen: boolean
+  isSubmitting: boolean
 
-  setFormField: <K extends keyof TechnicianInsert>(
-    field: K,
-    value: TechnicianInsert[K],
-  ) => void;
-
-  openAdd: () => void;
-  openEdit: (data: TechnicianRow) => void;
-  closeDialog: () => void;
-  resetForm: () => void;
-
-  setIsSubmitting: (value: boolean) => void;
+  setFormField: <K extends keyof TechnicianInsert>(field: K, value: TechnicianInsert[K]) => void
+  openAdd: () => void
+  openEdit: (data: TechnicianRow) => void
+  closeDialog: () => void
+  resetForm: () => void
+  setIsSubmitting: (value: boolean) => void
 }
+
+// ─── Defaults ─────────────────────────────────────────────────────────────────
 
 const defaultForm: TechnicianInsert = {
   name: "",
   email: "",
   commission: 0,
   hired_date: new Date().toISOString().slice(0, 10),
-};
+}
+
+// ─── Store ────────────────────────────────────────────────────────────────────
 
 export const useTechnicianStore = create<TechnicianStore>((set) => ({
   form: defaultForm,
@@ -65,10 +66,7 @@ export const useTechnicianStore = create<TechnicianStore>((set) => ({
       isSubmitting: false,
     }),
 
-  closeDialog: () =>
-    set({
-      isDialogOpen: false,
-    }),
+  closeDialog: () => set({ isDialogOpen: false }),
 
   resetForm: () =>
     set({
@@ -78,4 +76,4 @@ export const useTechnicianStore = create<TechnicianStore>((set) => ({
     }),
 
   setIsSubmitting: (value) => set({ isSubmitting: value }),
-}));
+}))

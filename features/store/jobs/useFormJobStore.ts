@@ -3,6 +3,8 @@ import type { Database } from "@/database.types"
 import dayjs from "@/lib/dayjs"
 import { resolveTimezone } from "@/lib/timezone"
 
+// ─── Types ───────────────────────────────────────────────────────────────────
+
 type FormMode = "add" | "edit"
 
 export interface JobFormValues {
@@ -34,14 +36,13 @@ interface JobStore {
   isDialogOpen: boolean
   isSubmitting: boolean
   openAdd: (timezone?: string) => void
-  openEdit: (
-    data: JobFormValues & { work_order_id: string },
-    timezone?: string
-  ) => void
+  openEdit: (data: JobFormValues & { work_order_id: string }, timezone?: string) => void
   closeDialog: () => void
   resetForm: () => void
   setIsSubmitting: (value: boolean) => void
 }
+
+// ─── Defaults ─────────────────────────────────────────────────────────────────
 
 // Format helper for datetime-local inputs in the active timezone.
 const getTimezoneLocalISOTime = (timezone?: string) =>
@@ -69,6 +70,8 @@ export const defaultJobForm: JobFormValues = {
   deposits: 0,
   payment_status: "full",
 }
+
+// ─── Store ────────────────────────────────────────────────────────────────────
 
 export const useJobStore = create<JobStore>((set) => ({
   form: { ...defaultJobForm },

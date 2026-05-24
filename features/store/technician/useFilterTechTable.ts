@@ -1,7 +1,10 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from "zustand"
+import { persist } from "zustand/middleware"
 
-export type CommissionFilter = "all" | "low" | "mid" | "high";
+// ─── Types ───────────────────────────────────────────────────────────────────
+
+export type CommissionFilter = "all" | "low" | "mid" | "high"
+
 export type SortKey =
   | "name"
   | "commission"
@@ -10,23 +13,26 @@ export type SortKey =
   | "total_company_net"
   | "total_commission_earned"
   | "hired_date"
-  | null;
-export type SortDir = "asc" | "desc";
+  | null
+
+export type SortDir = "asc" | "desc"
 
 interface FilterState {
-  search: string;
-  commissionFilter: CommissionFilter;
-  sortKey: SortKey; // null = preserve source order (created_at desc from the hook)
-  sortDir: SortDir;
-  showRemoved: boolean;
+  search: string
+  commissionFilter: CommissionFilter
+  sortKey: SortKey // null = preserve source order (created_at desc from the hook)
+  sortDir: SortDir
+  showRemoved: boolean
 
-  setSearch: (search: string) => void;
-  setCommissionFilter: (filter: CommissionFilter) => void;
-  setSortKey: (key: SortKey) => void;
-  setSortDir: (dir: SortDir) => void;
-  setShowRemoved: (show: boolean) => void;
-  reset: () => void;
+  setSearch: (search: string) => void
+  setCommissionFilter: (filter: CommissionFilter) => void
+  setSortKey: (key: SortKey) => void
+  setSortDir: (dir: SortDir) => void
+  setShowRemoved: (show: boolean) => void
+  reset: () => void
 }
+
+// ─── Initial State ────────────────────────────────────────────────────────────
 
 const initialState = {
   search: "",
@@ -34,7 +40,9 @@ const initialState = {
   sortKey: null as SortKey,
   sortDir: "asc" as SortDir,
   showRemoved: false,
-};
+}
+
+// ─── Store ────────────────────────────────────────────────────────────────────
 
 export const useFilterTechTable = create<FilterState>()(
   persist(
@@ -51,4 +59,4 @@ export const useFilterTechTable = create<FilterState>()(
       name: "tech-table-filters", // localStorage key
     },
   ),
-);
+)

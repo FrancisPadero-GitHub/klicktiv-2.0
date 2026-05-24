@@ -1,9 +1,13 @@
-import { create } from "zustand";
+import { create } from "zustand"
+
+// ─── Types ───────────────────────────────────────────────────────────────────
 
 interface JobTableStore {
-  currentPage: number;
-  setCurrentPage: (page: number | ((prev: number) => number)) => void;
+  currentPage: number
+  setCurrentPage: (page: number | ((prev: number) => number)) => void
 }
+
+// ─── Store ────────────────────────────────────────────────────────────────────
 
 export const useJobTableStore = create<JobTableStore>((set) => ({
   currentPage: 1,
@@ -11,4 +15,4 @@ export const useJobTableStore = create<JobTableStore>((set) => ({
     set((state) => ({
       currentPage: typeof page === "function" ? page(state.currentPage) : page,
     })),
-}));
+}))
