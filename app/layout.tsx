@@ -1,16 +1,14 @@
 import { Geist_Mono, Nunito_Sans } from "next/font/google"
 
 import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
 import { cn } from "@/lib/utils"
 
-// Wrappers
-import { QueryProvider } from "@/components/query-provider"
-import { AuthProvider } from "@/components/auth-context-provider"
-import { TimezoneProvider } from "@/components/timezone-provider"
+// Global Provider
+import GlobalProvider from "@/components/providers/global-provider"
 
-// Components
-import { Toaster } from "@/components/ui/sonner"
+// Vercel stuff
+import { SpeedInsights } from "@vercel/speed-insights/next"
+import { Analytics } from "@vercel/analytics/next"
 
 const nunitoSans = Nunito_Sans({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -36,14 +34,9 @@ export default function RootLayout({
       )}
     >
       <body>
-        <QueryProvider>
-          <AuthProvider>
-            <ThemeProvider>
-              <Toaster position="top-right" />
-              <TimezoneProvider>{children}</TimezoneProvider>
-            </ThemeProvider>
-          </AuthProvider>
-        </QueryProvider>
+        <Analytics />
+        <SpeedInsights />
+        <GlobalProvider>{children}</GlobalProvider>
       </body>
     </html>
   )
