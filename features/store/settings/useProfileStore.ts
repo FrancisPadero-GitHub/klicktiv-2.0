@@ -1,6 +1,6 @@
 import { create } from "zustand"
 import { devtools } from "zustand/middleware"
-import type { ProfilesRow } from "@/hooks/auth/useFetchProfiles"
+import type { ProfilesRow } from "@/hooks/profiles/useFetchProfiles"
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -71,20 +71,22 @@ export const useProfileStore = create<ProfileStore>()(
         set(
           (state) => ({ form: { ...state.form, ...data } }),
           false,
-          "profile/setForm",
+          "profile/setForm"
         ),
 
-      resetForm: () => set({ form: defaultFormValues }, false, "profile/resetForm"),
+      resetForm: () =>
+        set({ form: defaultFormValues }, false, "profile/resetForm"),
 
       setViewDialogOpen: (open) =>
         set({ isViewDialogOpen: open }, false, "profile/setViewDialogOpen"),
 
       // Sets the mode to dynamically adjust dialog texts.
-      setFormType: (type) => set({ formType: type }, false, "profile/setFormType"),
+      setFormType: (type) =>
+        set({ formType: type }, false, "profile/setFormType"),
 
       setFormDialogOpen: (open) =>
         set({ isFormDialogOpen: open }, false, "profile/setFormDialogOpen"),
     }),
-    { name: "Profile Store" },
-  ),
+    { name: "Profile Store" }
+  )
 )

@@ -6,11 +6,11 @@ import { useFetchCompany } from "@/hooks/company/useFetchCompany"
 
 // components
 import SidebarContent from "@/components/dashboard/home-layout/sidebar-contents"
-import { useAuth } from "@/components/auth-context-provider"
+import { useAuth } from "@/components/providers/auth-context-provider"
 import Topbar from "@/components/dashboard/home-layout/topbar"
-import Loading from "@/components/loading"
+import Loading from "@/components/loading-styles/loading"
 
-// store
+// zustand
 import { useSidebarStore } from "@/features/store/dashboard/useSidebarStore"
 
 export default function DashboardLayout({

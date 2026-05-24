@@ -1,5 +1,4 @@
 "use client"
-import Image from "next/image"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
@@ -14,14 +13,6 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
-import { Kbd } from "@/components/ui/kbd"
-
-// import FeedbackPage from "../submit-feedback/feedback-page";
 import {
   LayoutDashboard,
   Briefcase,
@@ -40,11 +31,9 @@ import { useSidebarStore } from "@/features/store/dashboard/useSidebarStore"
 import { useLogout } from "@/hooks/authentication/useLogout"
 import { useEffect } from "react"
 
-// public
-import KlicktivLogoLightMode from "@/public/kt_logo_name.png"
-import KlicktivLogoDarkMode from "@/public/kt_logo_name_dark.png"
-import KlicktivIconLightMode from "@/public/icon.png"
-import KlicktivIconDarkMode from "@/public/icon_dark.png"
+// components
+import SidebarLogoIcon from "./sidebar-logo"
+import FeedbackPage from "@/components/dashboard/submit-feedback/feedback-page"
 
 // These are the sidebar navigation items.
 export const navItems = [
@@ -105,88 +94,8 @@ export default function SidebarContent({
 
   return (
     <>
-      {/* Logo / Header */}
-      <div
-        className={cn(
-          "flex h-16 shrink-0 items-center border-b border-sidebar-border transition-all duration-100",
-          "justify-center px-2"
-        )}
-      >
-        <div className="relative flex h-full w-full items-center justify-center overflow-hidden">
-          {/* Icon only (for collapsed sidebar) */}
-          <div
-            className={cn(
-              "absolute flex items-center justify-center transition-all duration-200 ease-in-out",
-              collapsed
-                ? "h-15 w-15 scale-100 opacity-100"
-                : "pointer-events-none h-8 w-8 scale-90 opacity-0"
-            )}
-          >
-            <Tooltip>
-              <TooltipTrigger>
-                <Image
-                  src={KlicktivIconLightMode}
-                  alt="Klicktiv Logo"
-                  width={2048}
-                  height={2048}
-                  className="dark:hidden"
-                  priority
-                  quality={100}
-                />
-                <Image
-                  src={KlicktivIconDarkMode}
-                  alt="Klicktiv Logo"
-                  width={2048}
-                  height={2048}
-                  className="hidden dark:block"
-                  priority
-                  quality={100}
-                />
-              </TooltipTrigger>
-              <TooltipContent side="bottom">
-                Press <Kbd>D</Kbd> to toggle between light & dark mode
-              </TooltipContent>
-            </Tooltip>
-          </div>
-          {/* Full logo (icon + text) */}
-          <div
-            className={cn(
-              // for some reason if you remove this pt-2 the logo will corner so much up top and do not center, and no items and justify center
-              // wont do either
-              "absolute flex pt-2 transition-all duration-200 ease-in-out",
-              !collapsed
-                ? "h-auto w-25 scale-90 opacity-100"
-                : "pointer-events-none h-auto w-25 scale-90 opacity-0"
-            )}
-          >
-            <Tooltip>
-              <TooltipTrigger>
-                <Image
-                  src={KlicktivLogoLightMode}
-                  alt="Klicktiv Logo"
-                  width={1672}
-                  height={941}
-                  className="dark:hidden"
-                  priority
-                  quality={100}
-                />
-                <Image
-                  src={KlicktivLogoDarkMode}
-                  alt="Klicktiv Logo"
-                  width={1672}
-                  height={941}
-                  className="hidden dark:block"
-                  priority
-                  quality={100}
-                />
-              </TooltipTrigger>
-              <TooltipContent side="bottom">
-                Press <Kbd>D</Kbd> to toggle between light & dark mode
-              </TooltipContent>
-            </Tooltip>
-          </div>
-        </div>
-      </div>
+      {/* Logo on the sidebar  */}
+      <SidebarLogoIcon collapsed={collapsed} />
 
       {/* Nav */}
       <nav className="flex flex-1 flex-col gap-1 overflow-y-auto p-2">
@@ -232,7 +141,7 @@ export default function SidebarContent({
 
       {/* Feedback — hide label when collapsed */}
       <div className="px-2 pb-2">
-        {/* <FeedbackPage>
+        <FeedbackPage>
           <button
             title={collapsed ? "Submit Feedback" : undefined}
             className={cn(
@@ -253,7 +162,7 @@ export default function SidebarContent({
               Submit Feedback
             </span>
           </button>
-        </FeedbackPage> */}
+        </FeedbackPage>
       </div>
 
       {/* User & Logout */}

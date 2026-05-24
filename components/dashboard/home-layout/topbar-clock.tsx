@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import dayjs from "@/lib/dayjs"
 import { Clock, ChevronDown, RotateCcw } from "lucide-react"
 import { TIMEZONE_OPTIONS, getBrowserTimezone } from "@/lib/timezone"
-import { useTimezone } from "@/components/timezone-provider"
+import { useTimezone } from "@/components/providers/timezone-provider"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +15,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
 
 export function TopbarClock() {
   const [now, setNow] = useState(dayjs())
