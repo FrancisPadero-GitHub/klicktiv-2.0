@@ -51,7 +51,7 @@ Martin wants the same format for daily, weekly and monthly
 Should be separate from the current one, do not change the current report format, just add this as filter
 
 
-remove - 
+remove - [done]
  - shalow
  - yotam
 
