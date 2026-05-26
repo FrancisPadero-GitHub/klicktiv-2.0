@@ -2,6 +2,12 @@
 import Link from "next/link"
 import Image from "next/image"
 import { Menu, X } from "lucide-react"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
+import { Kbd } from "@/components/ui/kbd"
 import { Button } from "@/components/ui/button"
 import React from "react"
 import { cn } from "@/lib/utils"
@@ -46,28 +52,35 @@ export const HeroHeader = () => {
               <Link
                 href="/"
                 aria-label="home"
+                title="Go to landing page"
                 className="flex h-auto w-25 items-center space-x-2"
               >
-                <Image
-                  src={KlicktivLogo}
-                  title="Go to landing page"
-                  alt="Klicktiv"
-                  width={1672}
-                  height={941}
-                  priority
-                  className="block dark:hidden"
-                />
-                <Image
-                  src={KlicktivLogoDark}
-                  title="Go to landing page"
-                  alt="Klicktiv"
-                  width={1672}
-                  height={941}
-                  priority
-                  className="hidden dark:block"
-                />
+                <Tooltip>
+                  <TooltipTrigger>
+                    <Image
+                      src={KlicktivLogo}
+                      title="Go to landing page"
+                      alt="Klicktiv"
+                      width={1672}
+                      height={941}
+                      priority
+                      className="block dark:hidden"
+                    />
+                    <Image
+                      src={KlicktivLogoDark}
+                      title="Go to landing page"
+                      alt="Klicktiv"
+                      width={1672}
+                      height={941}
+                      priority
+                      className="hidden dark:block"
+                    />
+                  </TooltipTrigger>
+                  <TooltipContent side="bottom">
+                    Press <Kbd>D</Kbd> to toggle between light & dark mode
+                  </TooltipContent>
+                </Tooltip>
               </Link>
-
               <button
                 onClick={() => setMenuState(!menuState)}
                 aria-label={menuState === true ? "Close Menu" : "Open Menu"}
