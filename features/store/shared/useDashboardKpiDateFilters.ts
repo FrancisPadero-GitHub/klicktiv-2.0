@@ -1,10 +1,15 @@
 import { create } from "zustand"
 import dayjs from "@/lib/dayjs"
+import { resolveTimezone } from "@/lib/timezone"
 
-// ─── Types ───────────────────────────────────────────────────────────────────
+/**
+ * This store is used for dashboard KPI's filter and export paramaters for the RPC functions
+ * USAGE:
+ *  1. dashboard KPI's in overview and jobs page
+ *  2. arguments for the excel and pdf exports
+ */
 
 export type DateFilterMode = "all" | "year" | "month" | "week" | "day" | "range"
-
 export interface JobDateFilter {
   mode: DateFilterMode
   /** Selected year for "year" or "month" modes */
@@ -22,7 +27,6 @@ export interface JobDateFilter {
   /** UUID of the selected technician, or "all" for no filter */
   technicianId: string | null
 }
-
 interface JobsFilterState extends JobDateFilter {
   setMode: (mode: DateFilterMode) => void
   setYear: (year: number) => void
@@ -36,25 +40,33 @@ interface JobsFilterState extends JobDateFilter {
   reset: () => void
 }
 
-// ─── Initial State ────────────────────────────────────────────────────────────
+/**
+ * To change
+ * set this to timezone preference for default values
+ * to eliminate the consfusion between dates shown
+ *
+ * ps: do not convert the data passing on the arguments to any hook or function to fetch data like
+ * rpc or view tables since its already pre configured value for the timezone the user selected
+ */
 
-// Use local time for defaults so that year/month/date match the user's
-// actual calendar day — not the UTC day which can lag behind by up to a day.
-const nowLocal = dayjs()
+// Create 'now' using the user's selected timezone (or browser default).
+// We resolve the timezone here instead of using a React hook so the store
+// can initialize correctly outside of component render scope.
+const timezone = dayjs().tz(resolveTimezone())
+
+console.log("useDashboardKpiDateFilters", timezone)
 
 const initialState: Omit<JobDateFilter, "technicianId"> = {
   mode: "year",
-  year: nowLocal.year(),
-  month: nowLocal.month() + 1, // dayjs months are 0-indexed (0-11)
-  isoWeek: nowLocal.format("YYYY-[W]WW"),
-  date: nowLocal.format("YYYY-MM-DD"),
-  startDate: nowLocal.startOf("month").format("YYYY-MM-DD"),
-  endDate: nowLocal.format("YYYY-MM-DD"),
+  year: timezone.year(),
+  month: timezone.month() + 1, // dayjs months are 0-indexed (0-11)
+  isoWeek: timezone.format("YYYY-[W]WW"),
+  date: timezone.format("YYYY-MM-DD"),
+  startDate: timezone.startOf("month").format("YYYY-MM-DD"),
+  endDate: timezone.format("YYYY-MM-DD"),
 }
 
-// ─── Store ────────────────────────────────────────────────────────────────────
-
-export const useJobFilterStore = create<JobsFilterState>()((set) => ({
+export const useDashboardKpiDateFilters = create<JobsFilterState>()((set) => ({
   ...initialState,
   technicianId: "all",
 
@@ -67,11 +79,12 @@ export const useJobFilterStore = create<JobsFilterState>()((set) => ({
   setEndDate: (endDate) => set({ endDate }),
   setTechnicianId: (technicianId) => set({ technicianId }),
 
-  setPreset: (mode, overrides) => set((state) => ({ ...state, mode, ...overrides })),
+  setPreset: (mode, overrides) =>
+    set((state) => ({ ...state, mode, ...overrides })),
 
   reset: () => {
     // Generate a fresh 'now' so resets don't use stale data if the tab is left open.
-    const freshNow = dayjs()
+    const freshNow = dayjs().tz(resolveTimezone())
     set({
       mode: "year",
       year: freshNow.year(),
@@ -85,8 +98,6 @@ export const useJobFilterStore = create<JobsFilterState>()((set) => ({
   },
 }))
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
 /**
  * Convert the store's filter state into the shape expected by fetch hooks.
  */
@@ -99,6 +110,7 @@ export function toJobsSummaryFilter(filter: JobDateFilter) {
     date: filter.date,
     startDate: filter.startDate,
     endDate: filter.endDate,
-    technicianId: filter.technicianId === "all" ? undefined : filter.technicianId,
+    technicianId:
+      filter.technicianId === "all" ? undefined : filter.technicianId,
   }
 }
