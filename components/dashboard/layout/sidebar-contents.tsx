@@ -37,7 +37,7 @@ import FeedbackPage from "@/components/dashboard/submit-feedback/feedback-page"
 
 // These are the sidebar navigation items.
 export const navItems = [
-  { href: "/dashboard", label: "Overview / Reports", icon: LayoutDashboard },
+  { href: "/dashboard", label: "Home", icon: LayoutDashboard },
   { href: "/dashboard/jobs", label: "Jobs", icon: Briefcase },
   { href: "/dashboard/estimates", label: "Estimates", icon: FileText },
   { href: "/dashboard/reviews", label: "Reviews", icon: MessageSquareText },
@@ -145,7 +145,7 @@ export default function SidebarContent({
           <button
             title={collapsed ? "Submit Feedback" : undefined}
             className={cn(
-              "flex w-full items-center rounded-md text-sm font-medium text-muted-foreground cursor-pointer transition-all duration-100 hover:bg-muted hover:text-foreground h-10 overflow-hidden",
+              "flex h-10 w-full cursor-pointer items-center overflow-hidden rounded-md text-sm font-medium text-muted-foreground transition-all duration-100 hover:bg-muted hover:text-foreground"
             )}
           >
             <div className="flex w-12 shrink-0 items-center justify-center">
@@ -153,10 +153,10 @@ export default function SidebarContent({
             </div>
             <span
               className={cn(
-                "truncate transition-all duration-100 ease-in-out whitespace-nowrap",
+                "truncate whitespace-nowrap transition-all duration-100 ease-in-out",
                 collapsed
-                  ? "w-0 opacity-0 pointer-events-none"
-                  : "flex-1 opacity-100 text-left",
+                  ? "pointer-events-none w-0 opacity-0"
+                  : "flex-1 text-left opacity-100"
               )}
             >
               Submit Feedback

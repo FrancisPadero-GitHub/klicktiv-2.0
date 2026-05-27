@@ -54,9 +54,6 @@ interface JobsFilterState extends JobDateFilter {
 // can initialize correctly outside of component render scope.
 const timezone = dayjs().tz(resolveTimezone())
 
-//
-console.log("useDashboardKpiDateFilters", timezone)
-
 const initialState: Omit<JobDateFilter, "technicianId"> = {
   mode: "year",
   year: timezone.year(),
