@@ -1,7 +1,5 @@
 import dayjs from "@/lib/dayjs"
 
-// ─── Constants ────────────────────────────────────────────────────────────────
-
 export const TIMEZONE_STORAGE_KEY = "klicktiv-timezone"
 
 export const TIMEZONE_OPTIONS = [
@@ -27,22 +25,22 @@ export const TIMEZONE_OPTIONS = [
   { value: "Pacific/Auckland", label: "Auckland, New Zealand" },
 ] as const
 
-// ─── Types ───────────────────────────────────────────────────────────────────
-
 export type SupportedTimezone = (typeof TIMEZONE_OPTIONS)[number]["value"]
 
-// ─── Helpers ──────────────────────────────────────────────────────────────────
-
-const supportedTimezoneValues = new Set(TIMEZONE_OPTIONS.map((option) => option.value))
+const supportedTimezoneValues = new Set(
+  TIMEZONE_OPTIONS.map((option) => option.value)
+)
 
 export function getBrowserTimezone() {
   return dayjs.tz.guess()
 }
 
 export function isSupportedTimezone(
-  timezone: string | null | undefined,
+  timezone: string | null | undefined
 ): timezone is SupportedTimezone {
-  return !!timezone && supportedTimezoneValues.has(timezone as SupportedTimezone)
+  return (
+    !!timezone && supportedTimezoneValues.has(timezone as SupportedTimezone)
+  )
 }
 
 /** Resolve timezone from an explicit value first, then from localStorage. */
@@ -68,6 +66,23 @@ export function saveTimezone(timezone: string | null) {
 
 export function getTimezoneLabel(timezone: string) {
   return (
-    TIMEZONE_OPTIONS.find((option) => option.value === timezone)?.label ?? timezone
+    TIMEZONE_OPTIONS.find((option) => option.value === timezone)?.label ??
+    timezone
   )
+}
+
+// Date formatter with timezone
+// This is used for formatting stored date like
+// formatDateWithTimezone(weekStart, "MMM D", timezone), or something similar
+
+export function formatDateWithTimezone(
+  value: Date | string,
+  format: string,
+  timezone?: string | null
+) {
+  if (timezone) {
+    return dayjs.utc(value).tz(timezone, true).format(format)
+  }
+
+  return dayjs.utc(value).format(format)
 }

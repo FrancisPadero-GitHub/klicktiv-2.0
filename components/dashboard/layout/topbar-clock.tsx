@@ -22,7 +22,7 @@ export function TopbarClock() {
 
   useEffect(() => {
     const i = setInterval(() => {
-      setNow(dayjs())
+      setNow(dayjs().tz())
     }, 1000)
 
     return () => clearInterval(i)

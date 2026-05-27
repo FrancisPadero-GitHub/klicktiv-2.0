@@ -5,10 +5,10 @@ import { cn } from "@/lib/utils"
 import { useFetchCompany } from "@/hooks/company/useFetchCompany"
 
 // components
-import SidebarContent from "@/components/dashboard/home-layout/sidebar-contents"
+import SidebarContent from "@/components/dashboard/layout/sidebar-contents"
 import { useAuth } from "@/components/providers/auth-context-provider"
-import Topbar from "@/components/dashboard/home-layout/topbar"
-import Loading from "@/components/loading-styles/loading"
+import Topbar from "@/components/dashboard/layout/topbar"
+import Loading from "@/components/loading-styles/dashboard-loading-skeleton"
 
 // zustand
 import { useSidebarStore } from "@/features/store/dashboard/useSidebarStore"
